@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { inventoryAPI } from '../services/api';
-import useAuthStore from '../store/authStore';
 import './DataEntry.css';
 
 const DataEntry = () => {
-  const { user } = useAuthStore();
   const [activeTab, setActiveTab] = useState('received');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -46,12 +44,11 @@ const DataEntry = () => {
     setLoading(true);
 
     try {
-      let response;
       const date_received = formData.date_received ? new Date(formData.date_received) : new Date();
 
       switch (activeTab) {
         case 'received':
-          response = await inventoryAPI.createReceivedYarn({
+          await inventoryAPI.createReceivedYarn({
             lot_number: formData.lot_number,
             style: formData.style,
             yarn_name: formData.yarn_name,
@@ -64,7 +61,7 @@ const DataEntry = () => {
           break;
 
         case 'issued':
-          response = await inventoryAPI.createIssuedYarn({
+          await inventoryAPI.createIssuedYarn({
             received_yarn_id: 1, // Should be fetched from search
             lot_number: formData.lot_number,
             issued_to: formData.issued_to,
@@ -76,7 +73,7 @@ const DataEntry = () => {
           break;
 
         case 'rejected':
-          response = await inventoryAPI.createRejectedYarn({
+          await inventoryAPI.createRejectedYarn({
             received_yarn_id: 1,
             lot_number: formData.lot_number,
             rejection_reason: formData.rejection_reason,
@@ -88,7 +85,7 @@ const DataEntry = () => {
           break;
 
         case 'qc':
-          response = await inventoryAPI.createQCYarn({
+          await inventoryAPI.createQCYarn({
             received_yarn_id: 1,
             lot_number: formData.lot_number,
             test_type: formData.test_type,

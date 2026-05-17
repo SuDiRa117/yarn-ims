@@ -1,14 +1,12 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiLogOut, FiMenu } from 'react-icons/fi';
+import { FiLogOut } from 'react-icons/fi';
 import useAuthStore from '../store/authStore';
 import './Header.css';
 
 const Header = () => {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = React.useState(false);
-
   const handleLogout = () => {
     logout();
     navigate('/login');

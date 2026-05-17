@@ -18,7 +18,7 @@ const Reports = () => {
       fetchAuditLogs();
       fetchUsers();
     }
-  }, [activeTab]);
+  }, [activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchAuditLogs = async () => {
     setLoading(true);

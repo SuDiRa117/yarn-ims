@@ -28,7 +28,7 @@ const StockView = () => {
     };
 
     fetchInventory();
-  }, []);
+  }, [setInventory, setIsLoading]);
 
   const handleSearch = (e) => {
     setFilters(prev => ({

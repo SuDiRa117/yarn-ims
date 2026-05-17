@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { inventoryAPI } from '../services/api';
 import useInventoryStore from '../store/inventoryStore';
 import './Dashboard.css';
-
-const COLORS = ['#667eea', '#764ba2', '#f093fb', '#4facfe'];
 
 const Dashboard = () => {
   const { analytics, setAnalytics, isLoading, setIsLoading } = useInventoryStore();
@@ -25,7 +23,7 @@ const Dashboard = () => {
     };
 
     fetchAnalytics();
-  }, []);
+  }, [setAnalytics, setIsLoading]);
 
   const generateAlerts = (data) => {
     const newAlerts = [];

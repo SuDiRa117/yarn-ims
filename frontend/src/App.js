@@ -19,7 +19,7 @@ function App() {
 
   useEffect(() => {
     loadAuth();
-  }, []);
+  }, [loadAuth]);
 
   return (
     <BrowserRouter>
