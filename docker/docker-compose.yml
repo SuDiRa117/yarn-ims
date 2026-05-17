@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: yarn-ims-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: yarn_ims
+      MYSQL_USER: yarn_user
+      MYSQL_PASSWORD: yarn_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - yarn-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    container_name: yarn-ims-backend
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: production
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: yarn_user
+      DB_PASSWORD: yarn_password
+      DB_NAME: yarn_ims
+      JWT_SECRET: your-secret-key-change-in-production
+      JWT_EXPIRE: 7d
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - yarn-network
+    restart: unless-stopped
+
+  # Frontend Application
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    container_name: yarn-ims-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:5000/api
+    depends_on:
+      - backend
+    networks:
+      - yarn-network
+    restart: unless-stopped
+
+volumes:
+  db_data:
+
+networks:
+  yarn-network:
+    driver: bridge
