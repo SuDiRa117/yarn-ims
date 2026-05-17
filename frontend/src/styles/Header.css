@@ -15,7 +15,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  height: 64px;
 }
 
 .header-brand {
@@ -28,16 +28,15 @@
   gap: 10px;
   text-decoration: none;
   color: white;
-  font-size: 24px;
-  font-weight: bold;
 }
 
 .logo-icon {
-  font-size: 32px;
+  font-size: 28px;
 }
 
 .logo-text {
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: bold;
   letter-spacing: 1px;
 }
 
@@ -55,6 +54,7 @@
   transition: all 0.3s ease;
   padding: 8px 0;
   border-bottom: 2px solid transparent;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -94,8 +94,87 @@
   align-items: center;
   gap: 8px;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .logout-btn:hover {
   background: rgba(255, 255, 255, 0.3);
+}
+
+/* Hamburger button — hidden on desktop */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Mobile drawer */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: rgba(80, 50, 140, 0.97);
+  padding: 16px 20px 24px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.mobile-menu.open {
+  display: flex;
+}
+
+.mobile-nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 16px;
+}
+
+.mobile-user-info {
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+  padding: 14px 0 8px;
+}
+
+.mobile-logout-btn {
+  margin-top: 8px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .header-nav,
+  .header-user {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+
+  .mobile-menu.open {
+    display: flex;
+  }
 }

@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiLogOut } from 'react-icons/fi';
+import { FiLogOut, FiMenu, FiX } from 'react-icons/fi';
 import useAuthStore from '../store/authStore';
-import './Header.css';
+import '../styles/Header.css';
 
 const Header = () => {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <header className="header">
@@ -37,6 +41,21 @@ const Header = () => {
             <FiLogOut /> Logout
           </button>
         </div>
+
+        <button className="menu-toggle" onClick={() => setMenuOpen(o => !o)} aria-label="Toggle menu">
+          {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+        </button>
+      </div>
+
+      <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
+        <Link to="/dashboard" className="mobile-nav-link" onClick={closeMenu}>Dashboard</Link>
+        <Link to="/data-entry" className="mobile-nav-link" onClick={closeMenu}>Data Entry</Link>
+        <Link to="/stock" className="mobile-nav-link" onClick={closeMenu}>Stock View</Link>
+        <Link to="/reports" className="mobile-nav-link" onClick={closeMenu}>Reports</Link>
+        <div className="mobile-user-info">Logged in as <strong>{user?.username}</strong> ({user?.role})</div>
+        <button className="mobile-logout-btn" onClick={handleLogout}>
+          <FiLogOut /> &nbsp;Logout
+        </button>
       </div>
     </header>
   );
